@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="Request" targetNamespace="http://tempuri.org/"
+                  xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex"
+                  xmlns:wsa10="http://www.w3.org/2005/08/addressing"
+                  xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
+                  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:tns="http://tempuri.org/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://tempuri.org/Imports">
+            <xsd:import namespace="http://tempuri.org/"
+                        schemaLocation="http://devservice.smartbill.co.kr/NeoBill_Message/Request.svc?xsd=xsd0"/>
+            <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"
+                        schemaLocation="http://devservice.smartbill.co.kr/NeoBill_Message/Request.svc?xsd=xsd1"/>
+            <xsd:import namespace="http://schemas.datacontract.org/2004/07/BizOn.Biz.Model"
+                        schemaLocation="http://devservice.smartbill.co.kr/NeoBill_Message/Request.svc?xsd=xsd2"/>
+            <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"
+                        schemaLocation="http://devservice.smartbill.co.kr/NeoBill_Message/Request.svc?xsd=xsd3"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="IRequest_DoTest_OutputMessage">
+        <wsdl:part name="parameters" element="tns:DoTestResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="IRequest_DoTest_InputMessage">
+        <wsdl:part name="parameters" element="tns:DoTest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="IRequest_ServiceRequest_InputMessage">
+        <wsdl:part name="parameters" element="tns:ServiceRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="IRequest_ServiceRequest_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ServiceRequestResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="IRequest_ResultReceive_InputMessage">
+        <wsdl:part name="parameters" element="tns:ResultReceive"/>
+    </wsdl:message>
+    <wsdl:message name="IRequest_ResultReceive_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ResultReceiveResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="IRequest">
+        <wsdl:operation name="DoTest">
+            <wsdl:input message="tns:IRequest_DoTest_InputMessage" wsaw:Action="http://tempuri.org/IRequest/DoTest">
+            </wsdl:input>
+            <wsdl:output message="tns:IRequest_DoTest_OutputMessage"
+                         wsaw:Action="http://tempuri.org/IRequest/DoTestResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ServiceRequest">
+            <wsdl:input message="tns:IRequest_ServiceRequest_InputMessage"
+                        wsaw:Action="http://tempuri.org/IRequest/ServiceRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:IRequest_ServiceRequest_OutputMessage"
+                         wsaw:Action="http://tempuri.org/IRequest/ServiceRequestResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ResultReceive">
+            <wsdl:input wsaw:Action="http://tempuri.org/IRequest/ResultReceive"
+                        message="tns:IRequest_ResultReceive_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IRequest/ResultReceiveResponse"
+                         message="tns:IRequest_ResultReceive_OutputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding_IRequest" type="tns:IRequest">
+        <wsp:PolicyReference URI="#BasicHttpBinding_IRequest_policy"/>
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="DoTest">
+            <soap:operation soapAction="http://tempuri.org/IRequest/DoTest" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ServiceRequest">
+            <soap:operation soapAction="http://tempuri.org/IRequest/ServiceRequest" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ResultReceive">
+            <soap:operation soapAction="http://tempuri.org/IRequest/ResultReceive" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Request">
+        <wsdl:port name="BasicHttpBinding_IRequest" binding="tns:BasicHttpBinding_IRequest">
+            <soap:address location="http://tempuri.org/services/BasicHttpBinding_IRequest"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsp:Policy wsu:Id="BasicHttpBinding_IRequest_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <wsoma:OptimizedMimeSerialization
+                        xmlns:wsoma="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization"/>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+</wsdl:definitions>

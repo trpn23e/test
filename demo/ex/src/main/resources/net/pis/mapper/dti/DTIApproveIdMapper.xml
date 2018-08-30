@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.pis.dao.dti.DTIApproveIdMapper">
+
+	<resultMap id="dtiApproveIdResult" type="net.pis.dto.table.DTIApproveIdDTO">
+		<result property="ntsCode" column="NTSCODE"/>
+		<result property="linkcompanycode" column="LINKCOMPANYCODE"/>
+		<result property="seqNo" column="SEQ_NO"/>
+	</resultMap>
+	
+	<insert id="insert">
+		<!-- NOTIHING -->
+	</insert>
+	
+	<select id="select" resultMap="dtiApproveIdResult">
+		<!-- NOTIHING -->
+	</select>
+	
+	<select id="read" resultMap="dtiApproveIdResult">
+		SELECT * FROM xxsb_dti_approve_id
+		WHERE 1 = 1
+        <if test="linkcompanycode != null" >
+			AND linkcompanycode = #{linkcompanycode}
+		</if>
+	</select>
+	
+	<update id="update">
+	  UPDATE xxsb_dti_approve_id
+	  SET
+		    SEQ_NO = #{seqNo}
+		WHERE
+		    NTSCODE = #{ntsCode}
+	</update>
+	
+	
+	<delete id="delete"></delete>
+	
+
+
+
+
+</mapper>

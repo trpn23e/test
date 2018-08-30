@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.pis.dao.dti.FileDataMapper">
+
+    <resultMap id="fileDataDTOResult" type="net.pis.dto.FileDataDTO">
+        <result property="fileName"		column="FILE_NAME" />
+        <result property="fileSize"		column="FILE_SIZE" />
+        <result property="fileData"		column="FILE_DATA" />
+        <result property="fileSeq"		column="FILE_SEQ" />
+    </resultMap>
+
+    
+    <select id="getFileData" resultMap="fileDataDTOResult">
+        SELECT
+             FILE_NAME
+            ,FILE_SIZE
+            ,FILE_DATA
+            ,FILE_SEQ
+        FROM
+            SBMS_FILE_DATA
+        WHERE
+            MESSAGE_TAG_ID = #{messageMetaInfo.messageTagId}
+    </select>
+
+
+    <!-- TODO : xxsb_delivery_dti_file 테이블과 sbms_file_data 필드 정리 필요 쿼리재수정 필요 -->
+    <insert id="insertFileData">
+       INSERT INTO SBMS_FILE_DATA
+       (
+            FILE_DATA_ID
+            ,MESSAGE_TAG_ID
+            ,FILE_NAME
+            ,FILE_SIZE
+            ,FILE_DATA
+            ,REG_TIMESTAMP
+       )VALUES(
+            #{fileDataId}
+            ,#{messageTagId}
+            ,#{messageFile.fileName}
+            ,#{messageFile.fileSize}
+            ,#{messageFile.fileData}
+            ,GETDATE()
+       )
+    </insert>
+
+
+
+
+    <insert id="create">
+       INSERT INTO SBMS_FILE_DATA
+       (
+            FILE_DATA_ID
+            ,MESSAGE_TAG_ID
+            ,MESSAGE_TAG_SEQ
+            ,FILE_NAME
+            ,FILE_SIZE
+            ,FILE_DATA
+            ,FILE_GUBUN
+            ,FILE_SEQ
+            ,REG_TIMESTAMP
+       )VALUES(
+            #{messageTagId}
+            ,#{messageTagId}
+            ,#{messageTagSeq}
+            ,#{fileName}
+            ,#{fileSize}
+            ,#{fileData}
+            ,#{fileGubun}
+            ,#{fileSeq}
+            ,GETDATE()
+       )
+    </insert>
+
+    <select id="read" resultMap="fileDataDTOResult">
+        SELECT
+             FILE_DATA_ID
+            ,MESSAGE_TAG_ID
+            ,MESSAGE_TAG_SEQ
+            ,FILE_NAME
+            ,FILE_SIZE
+            ,FILE_DATA
+            ,FILE_GUBUN
+            ,FILE_SEQ
+            ,REG_TIMESTAMP
+        FROM
+            SBMS_FILE_DATA
+        WHERE 1 = 1
+		<if test="null != fileDataId">AND FILE_DATA_ID = #{fileDataId}</if>
+		<if test="null != messageTagId">AND MESSAGE_TAG_ID = #{messageTagId}</if>
+		<if test="null != messageTagSeq">AND MESSAGE_TAG_SEQ = #{messageTagSeq}</if>
+
+		ORDER BY FILE_DATA_ID, MESSAGE_TAG_ID, MESSAGE_TAG_SEQ
+
+    </select>
+
+    <update id="update">
+        UPDATE SBMS_FILE_DATA
+         SET
+			<if test="null != messageTagId">MESSAGE_TAG_ID = #{messageTagId},</if>
+			<if test="null != messageTagSeq">MESSAGE_TAG_SEQ = #{messageTagSeq},</if>
+			<if test="null != fileName">FILE_NAME = #{fileName},</if>
+			<if test="null != fileSize">FILE_SIZE = #{fileSize},</if>
+			<if test="null != fileData">FILE_DATA = #{fileData},</if>
+			<if test="null != fileGubun">FILE_GUBUN = #{fileGubun},</if>
+			<if test="null != fileSeq">FILE_DATA = #{fileSeq},</if>
+			REG_TIMESTAMP = GETDATE()
+         WHERE 1 = 1
+			AND FILE_DATA_ID = #{fileDataId}
+			<if test="null != messageTagId">AND MESSAGE_TAG_ID = #{messageTagId}</if>
+			<if test="null != messageTagSeq">AND MESSAGE_TAG_SEQ = #{messageTagSeq}</if>
+    </update>
+
+    <delete id="delete">
+
+
+    </delete>
+
+</mapper>

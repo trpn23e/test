@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.pis.dao.dti.DTIInterfaceMapper">
+
+	<resultMap id="getDtiBatchTargetResult" type="net.pis.dto.table.DTIInterfaceDTO">
+		<result property="messageId" column="MESSAGE_ID"/>
+		<result property="conversationId" column="CONVERSATION_ID"/>
+		<result property="supbuyType" column="SUPBUY_TYPE"/>
+		<result property="direction" column="DIRECTION"/>
+		<result property="signal" column="SIGNAL"/>
+		<result property="messageStatusFlag" column="MESSAGE_STATUS_FLAG"/>
+		<result property="targetSystemId" column="TARGET_SYSTEM_ID"/>
+		<result property="metaString" column="META_STRING"/>
+		<result property="authTicket" column="AUTH_TICKET"/>
+		<result property="lastUpdateDate" column="LAST_UPDATE_DATE" />
+	</resultMap>
+	
+	<insert id="insert">
+		INSERT INTO XXSB_DTI_INTERFACE (
+			MESSAGE_ID, CONVERSATION_ID, SUPBUY_TYPE, DIRECTION, SIGNAL,
+		    MESSAGE_STATUS_FLAG, TARGET_SYSTEM_ID, META_STRING, AUTH_TICKET, LAST_UPDATE_DATE 
+		) VALUES (
+			#{messageId}, #{conversationId}, #{supbuyType}, #{direction}, #{signal},
+			#{messageStatusFlag}, #{targetSystemId}, #{metaString}, #{authTicket}, GETDATE()
+		)
+	</insert>
+	
+	<select id="select" resultMap="getDtiBatchTargetResult">
+		SELECT * FROM XXSB_DTI_INTERFACE
+		WHERE 1 = 1
+		<if test="null != messageId">
+			AND MESSAGE_ID = #{messageId}
+		</if>
+	</select>
+	
+	<select id="read" resultMap="getDtiBatchTargetResult">
+		SELECT * FROM XXSB_DTI_INTERFACE
+		WHERE 1 = 1
+		<if test="null != messageId">
+			AND MESSAGE_ID = #{messageId}
+		</if>
+		<if test="null != messageStatusFlag">AND MESSAGE_STATUS_FLAG = #{messageStatusFlag}</if>
+        
+        ORDER BY LAST_UPDATE_DATE ASC
+	</select>
+	
+	<update id="update">
+		UPDATE XXSB_DTI_INTERFACE SET
+		<if test="null != messageStatusFlag">MESSAGE_STATUS_FLAG = #{messageStatusFlag},</if>
+		LAST_UPDATE_DATE = GETDATE()
+		WHERE 1 = 1
+		<if test="null != messageId">AND MESSAGE_ID = #{messageId}</if>
+		<if test="null != conversationId">AND CONVERSATION_ID = #{conversationId}</if>
+		<if test="null != supbuyType">AND SUPBUY_TYPE = #{supbuyType}</if>
+		<if test="null != direction">AND DIRECTION = #{direction}</if>
+		<if test="null != targetSystemId">AND TARGET_SYSTEM_ID = #{targetSystemId}</if>
+		<if test="null != metaString">AND META_STRING = #{metaString}</if>
+		<if test="null != authTicket">AND AUTH_TICKET = #{authTicket}</if>
+	</update>
+	
+	
+	<delete id="delete"></delete>
+	
+	
+	
+	
+
+	<select id="getDtiBatchTarget" resultMap="getDtiBatchTargetResult" >
+        <![CDATA[
+        SELECT
+			MESSAGE_ID,
+			CONVERSATION_ID,
+			SUPBUY_TYPE,
+			DIRECTION,
+			`SIGNAL`,
+			MESSAGE_STATUS_FLAG,
+			TARGET_SYSTEM_ID,
+			META_STRING,
+			LAST_UPDATE_DATE
+		FROM
+			XXSB_DTI_INTERFACE
+
+        WHERE MESSAGE_STATUS_FLAG = 'N'
+        ]]>
+	</select>
+
+
+	<update id="updateDtiMessageStatus">
+
+		UPDATE XXSB_DTI_INTERFACE
+		SET
+		MESSAGE_STATUS_FLAG = #{dto.batchComplete}
+		WHERE 1=1
+		AND MESSAGE_ID = #{dto.messageId}
+		AND CONVERSATION_ID =  #{dto.conversationId}
+		AND SUPBUY_TYPE =  #{dto.supbuyType}
+		AND DIRECTION =  #{dto.direction}
+
+	</update>
+
+
+	<update id="updateDtiStatus">
+		UPDATE XXSB_DTI_STATUS
+		SET
+		DTI_STATUS = #{flag}
+		WHERE 1=1
+		AND CONVERSATION_ID = #{dto.conversationId}
+		AND SUPBUY_TYPE = #{dto.supbuyType}
+		AND DIRECTION =  #{dto.direction}
+
+	</update>
+
+
+
+
+</mapper>

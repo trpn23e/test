@@ -1,0 +1,259 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.1.RELEASE'
+        springFrameworkVersion = '5.0.5.RELEASE'
+        tomcatVersion = '8.5.31'
+        activemqVersion = '5.14.4'
+        // lombokVersion = '1.11'
+        lombokVersion = '1.18.2'
+    }
+    repositories {
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "http://maven.jahia.org/maven2/"}
+        maven { url "http://central.maven.org/maven2/" }
+        maven { url "https://maven.repository.redhat.com/ga/" }
+        maven { url "http://nexus.axboot.com/content/repositories/releases" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "io.franzbecker:gradle-lombok:1.11"
+    }
+}
+
+plugins {
+    id 'java-library'
+}
+
+
+apply plugin: 'io.franzbecker.gradle-lombok'
+apply plugin: 'io.spring.dependency-management'
+
+/* bootJar {
+   classifier = 'boot'
+
+   } */
+
+
+manifest {
+    attributes('Implementation-Title': project.name,
+            'Implementation-Version': project.version)
+}
+
+
+subprojects {
+
+
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'war'
+    apply plugin: 'io.franzbecker.gradle-lombok'
+    apply plugin: 'io.spring.dependency-management'
+
+    war {
+        baseName = '[demoprj]'
+    }
+
+    dependencies {
+
+        // Spring Framework Extend
+        compile("org.springframework:spring-context:${springFrameworkVersion}")
+        compile("org.springframework:spring-tx:${springFrameworkVersion}")
+        compile("org.springframework:spring-jdbc:${springFrameworkVersion}")
+        compile("org.springframework:spring-webmvc:${springFrameworkVersion}")
+
+        compile('org.springframework.boot:spring-boot-starter-data-jpa')
+        //JSP 사용 주석처리
+        // compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+        compile('org.springframework.boot:spring-boot-starter-web')
+        compile('org.springframework.boot:spring-boot-starter-test')
+        compile('org.springframework.boot:spring-boot-starter-jdbc')
+        // runtime('org.springframework.boot:spring-boot-devtools')
+
+        //Apache CXF
+        // compile group: 'org.apache.cxf', name: 'cxf-spring-boot-starter-jaxws', version: '3.1.7'
+
+        // Spring Boot JMS
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-activemq'
+
+        // providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+        providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+
+        // PROVIDE JSP
+        providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+        providedRuntime("org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}")
+        providedRuntime("org.apache.tomcat.embed:tomcat-embed-el:${tomcatVersion}")
+        // providedRuntime("org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}")
+        providedRuntime("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}")
+
+        // compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '8.5.20'
+
+        // compile("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}")
+        // compile("org.apache.tomcat.embed:tomcat-embed-jasper")
+
+        // providedRuntime("org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}")
+        // providedRuntime("org.apache.tomcat.embed:tomcat-embed-el:${tomcatVersion}")
+        // providedRuntime("org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}")
+        // providedRuntime("org.apache.tomcat.embed:tomcat-embed-websocket:${tomcatVersion}")
+        //  JSTL
+        compile('javax.servlet:jstl:1.2')
+
+        compile("org.eclipse.jdt.core.compiler:ecj")
+
+        compile('com.google.code.gson:gson:2.8.2')
+
+        compileOnly("org.projectlombok:lombok:${lombokVersion}")
+
+        // Apache Common lang
+        // compile group: 'commons-lang', name: 'commons-lang', version:'2.6'
+
+        // Apache Common DBCP2
+        compile group: 'org.apache.commons' , name : 'commons-dbcp2', version : '2.1.1'
+
+        // Logback
+        compile group: 'ch.qos.logback', name: 'logback-core', version:'1.1.7'
+
+        // compile(group: 'commons-beanutils', name: 'commons-beanutils', version:'1.9.2') {
+        //    exclude(module: 'commons-logging')
+        // }
+        compile(group: 'commons-beanutils', name: 'commons-beanutils', version:'1.9.2')
+        // compile(group: 'commons-configuration', name: 'commons-configuration', version:'1.10') {
+        //     exclude(module: 'commons-logging')
+        // }
+        compile(group: 'commons-configuration', name: 'commons-configuration', version:'1.10')
+        compile group: 'commons-fileupload', name: 'commons-fileupload', version:'1.3.2'
+        // Apache Common IO
+        compile group: 'commons-io', name: 'commons-io', version:'2.4'
+
+        // Mybatis
+        compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
+        compile group: 'org.mybatis', name: 'mybatis-typehandlers-jsr310', version: '1.0.2'
+
+        // Maria
+        providedCompile('org.mariadb.jdbc:mariadb-java-client:2.0.3')
+        // MS SQL
+        compile('com.microsoft.sqlserver:mssql-jdbc')
+        // providedCompile group: 'net.sourceforge.jtds', name: 'jtds', version:'1.3.1'
+        // Oracle
+        // providedCompile group: 'com.oracle.jdbc', name: 'ojdbc', version:'12.1.0.2'
+
+        //SAP JCO
+        // compile group: 'org.hibersap', name: 'sapjco3', version: '3.0-RC02'
+
+        compile('net.sourceforge.nekohtml:nekohtml')
+
+        //JMS ActiveMQ
+        // compileOnly (group: 'org.apache.activemq', name: 'activemq-all', version: '5.14.4')
+        /** JMS **/
+        compile ("org.apache.activemq:activemq-broker:${activemqVersion}")
+        compile ("org.apache.activemq:activemq-client:${activemqVersion}")
+        compile ("org.apache.activemq:activemq-pool:${activemqVersion}")
+        compile ("org.apache.activemq:activemq-camel:${activemqVersion}")
+        compile ("org.apache.activemq:activemq-kahadb-store:${activemqVersion}")
+
+        // Apache CXF
+        compile group: 'cglib', name: 'cglib-nodep', version:'3.1'
+        compile(group: 'org.apache.cxf', name: 'cxf-rt-frontend-jaxws', version:'3.1.7') {
+            exclude(module: 'jaxb-impl')
+        }
+        compile(group: 'org.apache.xbean', name: 'xbean-spring', version:'3.18') {
+            exclude(module: 'commons-logging')
+        }
+        compile group: 'org.apache.cxf', name: 'cxf-rt-frontend-jaxrs', version:'3.1.7'
+        compile group: 'org.apache.cxf', name: 'cxf-rt-transports-http', version:'3.1.7'
+        compile group: 'org.apache.cxf', name: 'cxf-rt-ws-security', version: '3.1.7'
+
+        /** signgate.com **/
+        /*
+        compile group: 'com.signgate.secuxml', name: 'ldapjdk', version:'0.1'
+        compile group: 'com.signgate.secuxml', name: 'libgpkiapi_jni', version:'0.1'
+        compile group: 'com.signgate.secuxml', name: 'secu', version:'0.1'
+        compile group: 'com.signgate.secuxml', name: 'sggpki', version:'0.1'
+        compile group: 'com.signgate.secuxml', name: 'sgsecukit', version:'0.2'
+        compile group: 'com.signgate.secuxml', name: 'signgateCrypto', version:'0.1'
+        compile group: 'com.signgate.secuxml', name: 'signgate_common', version:'0.1'
+        compile group: 'com.signgate.secuxml', name: 'soap', version:'0.1'
+        compile group: 'com.signgate.secuxml', name: 'xmlParserAPIs', version:'0.1'
+        compile group: 'com.signgate.secuxml', name: 'xmlsecurity', version:'0.1'
+        */
+
+        //XML SERIALIZE
+        compile('xerces:xercesImpl:2.8.0')
+
+        compile group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.4.7'
+        compile group: 'xalan', name: 'xalan', version:'2.7.2'
+
+        compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.5'
+
+        compile group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
+
+        compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.0.Final'
+
+        compile group: 'net.sourceforge.htmlcleaner', name: 'htmlcleaner', version:'2.6.1'
+        compile group: 'org.xhtmlrenderer', name: 'flying-saucer-core', version:'9.0.4'
+        compile group: 'org.xhtmlrenderer', name: 'flying-saucer-pdf', version:'9.0.4'
+        compile group: 'org.jsoup', name: 'jsoup', version:'1.8.3'
+
+        //POI
+        compile group: 'org.apache.poi', name: 'poi', version: '3.16'
+        compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.16'
+    }
+
+
+}
+
+
+dependencies {
+
+    // compile('org.projectlombok:lombok')
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+    compileOnly("org.projectlombok:lombok:${lombokVersion}")
+
+    compile('com.querydsl:querydsl-core:4.2.1')
+    compile('com.querydsl:querydsl-apt:4.2.1')
+    compile('com.querydsl:querydsl-jpa:4.2.1')
+
+    compile group: 'com.querydsl', name: 'querydsl-sql-spring', version: '4.1.4'
+    compile group: 'ch.simas.qlrm', name: 'qlrm', version: '1.6.9'
+
+    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.0.7.RELEASE'
+    compile group: 'org.springframework', name: 'spring-jdbc', version: '4.3.2.RELEASE'
+    compile group: 'javax.persistence', name: 'persistence-api', version: '1.0.2'
+
+    compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.0.Final'
+
+    compileOnly group: 'org.springframework.data', name: 'spring-data-solr', version: '3.0.8.RELEASE'
+
+}
+
+
+configurations {
+    providedRuntime
+    querydslapt
+}
+
+
+def queryDslOutput = file("src/main/generated")
+sourceSets {
+    main {
+        java {
+            srcDir queryDslOutput
+        }
+    }
+}
+
+task generateQueryDSL(type: JavaCompile, group: 'build') {
+    source = sourceSets.main.java
+    classpath = configurations.compile
+    destinationDir = queryDslOutput
+    options.compilerArgs = [
+        "-proc:only",
+        // "-processor", 'com.querydsl.apt.jpa.JPAAnnotationProcessor,lombok.launch.AnnotationProcessorHider$AnnotationProcessor'
+        "-processor", 'com.querydsl.apt.jpa.JPAAnnotationProcessor'
+    ]
+}
+compileJava.dependsOn(generateQueryDSL)
+
+clean {
+    delete queryDslOutput
+}

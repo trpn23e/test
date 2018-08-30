@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.pis.dao.dti.DTIStatusMapper">
+
+
+	<resultMap id="dtiStatusResult" type="net.pis.dto.table.DTIStatusDTO">
+		<result property="conversationId"		column="CONVERSATION_ID" />
+		<result property="supbuyType"			column="SUPBUY_TYPE"/>
+		<result property="direction"			column="DIRECTION"/>
+		<result property="dtiStatus"			column="DTI_STATUS"/>
+        <result property="finalStatus"			column="FINAL_STATUS"/>
+		<result property="tranStatus"			column="TRAN_STATUS"/>
+		<result property="supPrintCnt"			column="SUP_PRINT_CNT"/>
+		<result property="byrPrintCnt"			column="BYR_PRINT_CNT"/>
+		<result property="returnCode"			column="RETURN_CODE"/>
+		<result property="returnDescription"	column="RETURN_DESCRIPTION"/>
+		<result property="sbdescription"		column="SBDESCRIPTION"/>
+		<result property="deptName"				column="DEPT_NAME"/>
+        <result property="sendRequest"          column="SEND_REQUEST" />
+        <result property="sendRequestDesc"      column="SEND_REQUEST_DESC" />
+        <result property="resultRequest"        column="RESULT_REQUEST" />
+        <result property="errorMsg"             column="ERROR_MSG" />
+		<result property="createdBy"			column="CREATED_BY"/>
+		<result property="creationDate"			column="CREATION_DATE"/>
+		<result property="lastUpdatedBy"		column="LAST_UPDATED_BY"/>
+		<result property="lastUpdateDate"		column="LAST_UPDATE_DATE"/>	
+	</resultMap>
+	
+	
+	<insert id="create">
+        INSERT INTO xxsb_dti_status
+        (
+            CONVERSATION_ID,
+            SUPBUY_TYPE,
+            DIRECTION,
+            DTI_STATUS,
+            TRAN_STATUS,
+            FINAL_STATUS,
+            SUP_PRINT_CNT,
+            BYR_PRINT_CNT,
+            RETURN_CODE,
+            RETURN_DESCRIPTION,
+            SBDESCRIPTION,
+            DEPT_NAME,
+            SEND_REQUEST,
+            SEND_REQUEST_DESC,
+            RESULT_REQUEST,
+            ERROR_MSG,
+            CREATED_BY,
+            CREATION_DATE,
+            LAST_UPDATED_BY,
+            LAST_UPDATE_DATE
+        )
+        VALUES
+        (
+            #{conversationId},
+            #{supbuyType},
+            #{direction},
+            #{dtiStatus},
+            #{tranStatus},
+            #{finalStatus},
+            #{supPrintCnt},
+            #{byrPrintCnt},
+            #{returnCode},
+            #{returnDescription},
+            #{sbdescription},
+            #{deptName},
+            #{sendRequest},
+            #{sendRequestDesc},
+            #{resultRequest},
+            #{errorMsg},
+            #{createdBy},
+            GETDATE(),
+            #{lastUpdatedBy},
+            #{lastUpdateDate}
+
+        )
+	</insert>
+	
+
+	<select id="read" resultMap="dtiStatusResult">
+		SELECT * FROM XXSB_DTI_STATUS
+		WHERE 1 = 1
+		
+		<if test="conversationId != null" >
+			AND CONVERSATION_ID = #{conversationId}
+		</if>
+		<if test="supbuyType != null">
+			AND SUPBUY_TYPE = #{supbuyType}
+		</if>
+		<if test="direction != null">
+			AND DIRECTION = #{direction}
+		</if>	
+	</select>
+
+
+    <select id="readNtsTargets" resultMap="dtiStatusResult">
+        SELECT * FROM XXSB_DTI_STATUS
+        WHERE 1 = 1
+        AND ((FINAL_STATUS ='I' AND TRAN_STATUS = 'C') OR FINAL_STATUS='C')
+        AND (SEND_REQUEST IS NULL OR (SEND_REQUEST NOT IN ('7', '3') ))
+        AND CREATION_DATE BETWEEN DATEADD(M, -2, GETDATE()) AND GETDATE()
+        ORDER BY CREATION_DATE
+    </select>
+    
+	
+	<update id="update">
+		UPDATE XXSB_DTI_STATUS SET
+			<if test="dtiStatus != null">DTI_STATUS = #{dtiStatus},</if>
+			<if test="tranStatus != null">TRAN_STATUS = #{tranStatus},</if>
+            <if test="finalStatus != null">FINAL_STATUS = #{finalStatus},</if>
+			<if test="returnCode != null">RETURN_CODE = #{returnCode},</if>
+			<if test="returnDescription != null">RETURN_DESCRIPTION = #{returnDescription},</if>	
+			<if test="sbdescription != null">SBDESCRIPTION = #{sbdescription},</if>	
+            <if test="sendRequest != null">SEND_REQUEST = #{sendRequest},</if>	
+            <if test="sendRequestDesc != null">SEND_REQUEST_DESC = #{sendRequestDesc},</if>	
+            <if test="resultRequest != null">RESULT_REQUEST = #{resultRequest},</if>
+            <if test="errorMsg != null">ERROR_MSG = #{errorMsg},</if>	
+            
+            <if test="lastUpdatedBy != null">LAST_UPDATED_BY = #{lastUpdatedBy},</if>
+            
+			LAST_UPDATE_DATE = <choose>
+                <when test="lastUpdateDate != null">
+                    #{lastUpdateDate}
+                </when>
+                <otherwise>
+                    GETDATE()
+                </otherwise>
+            </choose>
+		
+		WHERE 1 = 1
+		AND CONVERSATION_ID = #{conversationId}
+		AND SUPBUY_TYPE = #{supbuyType}
+		AND DIRECTION = #{direction}
+	</update>
+	
+	
+	<delete id="delete">
+		DELETE XXSB_DTI_STATUS
+		WHERE 1 = 1
+		AND CONVERSATION_ID = #{conversationId}
+		AND SUPBUY_TYPE = #{supbuyType}
+		AND DIRECTION = #{direction}
+	</delete>
+
+
+    
+
+
+</mapper>

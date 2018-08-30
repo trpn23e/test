@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.pis.dao.dti.DeliveryDtiFileMapper">
+
+
+    <resultMap id="deliveryDtiFileResult" type="net.pis.dto.table.DeliveryDtiFileDTO">
+        <result property="conversationId" column="CONVERSATION_ID"/>
+        <result property="fileSeq" column="FILE_SEQ"/>
+        <result property="eventId" column="EVENT_ID"/>
+        <result property="fileName" column="FILE_NAME"/>
+        <result property="fileSaveType" column="FILE_SAVE_TYPE"/>
+        <result property="fileSize" column="FILE_SIZE"/>
+        <result property="fileBinary" column="FILE_BINARY"/>
+        <result property="fileFullPath" column="FILE_FULL_PATH"/>
+        <result property="fileStatus" column="FILE_STATUS"/>
+        <result property="errorCode" column="ERROR_CODE"/>
+        <result property="errorMessage" column="ERROR_MESSAGE"/>
+        <result property="creationBy" column="CREATION_BY"/>
+        <result property="creationDate" column="CREATION_DATE"/>
+        <result property="lastUpdateBy" column="LAST_UPDATE_BY"/>
+        <result property="lastUpdateDate" column="LAST_UPDATE_DATE"/>
+        <result property="inOut" column="IN_OUT"/>
+        <result property="extXML" column="EXT_XML"/>
+    </resultMap>
+
+
+    <insert id="create">
+        INSERT INTO xxsb_delivery_dti_file
+        (
+            conversation_id,
+            file_seq,
+            event_id,
+            file_name,
+            file_save_type,
+            file_size,
+            file_binary,
+            file_full_path,
+            file_status,
+            error_code,
+            error_message,
+            creation_by,
+            creation_date,
+            last_update_by,
+            last_update_date,
+            in_out,
+            ext_xml
+        )VALUES(
+            #{conversation_id},
+            #{file_seq},
+            #{event_id},
+            #{file_name},
+            #{file_save_type},
+            #{file_size},
+            #{file_binary},
+            #{file_full_path},
+            #{file_status},
+            #{error_code},
+            #{error_message},
+            #{creation_by},
+            GETDATE()
+            #{last_update_by},
+            #{last_update_date},
+            #{in_out},
+            #{ext_xml}
+        )
+    </insert>
+
+    <select id="read" resultMap="deliveryDtiFileResult">
+        SELECT
+            conversation_id,
+            file_seq,
+            event_id,
+            file_name,
+            file_save_type,
+            file_size,
+            file_binary,
+            file_full_path,
+            file_status,
+            error_code,
+            error_message,
+            creation_by,
+            creation_date,
+            last_update_by,
+            last_update_date,
+            in_out,
+            ext_xml
+        FROM xxsb_delivery_dti_file
+        WHERE 1 = 1
+        <if test="conversationId != null" >
+            AND CONVERSATION_ID = #{conversationId}
+        </if>
+        <if test="fileSeq != null" >
+            AND file_seq = #{file_seq}
+        </if>
+    </select>
+
+    <update id="update">
+        UPDATE  xxsb_delivery_dti_file
+        SET
+        <if test="null != eventId">event_id = #{eventId}</if>
+        <if test="null != fileName">file_name = #{fileName},</if>
+        <if test="null != fileSaveType">file_save_type = #{fileSaveType},</if>
+        <if test="null != fileSize">file_size = #{fileSize},</if>
+        <if test="null != fileBinary">file_binary = #{fileBinary},</if>
+        <if test="null != fileFullPath">file_full_path = #{fileFullPath},</if>
+        <if test="null != fileStatus">file_status = #{fileStatus},</if>
+        <if test="null != errorCode">error_code = #{errorCode},</if>>
+        <if test="null != errorMessage">error_message = #{errorMessage},</if>>
+        <if test="null != creationBy">creation_by = #{creationBy},</if>
+        <if test="null != creationDate">creation_date = #{creationDate},</if>
+        <if test="null != lastUpdateBy">last_update_by = #{lastUpdateBy},</if>
+        <if test="null != inOut">in_out = #{inOut},</if>
+        <if test="null != extXml">ext_xml = #{extXml},</if>
+        last_update_date = GETDATE()
+    </update>
+
+    <delete id="delete">
+        <!-- NOTHING -->
+    </delete>
+
+
+
+
+</mapper>

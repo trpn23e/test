@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.pis.dao.dti.MessageTagMapper">
+
+	
+	<resultMap id="getMessageTagResult" type="net.pis.dto.MessageTagDTO">
+		<result property="messageTagId" column="MESSAGE_TAG_ID"/>
+		<result property="messageId" column="MESSAGE_ID"/>
+		<result property="serviceId" column="SERVICE_ID"/>
+		<result property="conversationId" column="CONVERSATION_ID"/>
+		<result property="sendRegNo" column="SEND_REGNO"/>
+		<result property="receiveRegNo" column="RECEIVE_REGNO"/>
+		<result property="status" column="STATUS"/>
+		<result property="signal" column="SIGNAL"/>
+		<result property="fromSystem" column="FROM_SYSTEM"/>
+		<result property="toSystem" column="TO_SYSTEM"/>
+		<result property="toSystemClientCode" column="TO_SYSTEM_CLIENT_CODE"/>
+		<result property="toSystemCompanycode" column="TO_SYSTEM_COMPANY_CODE"/>
+		<result property="messageType" column="MESSAGE_TYPE"/>
+		<result property="messageStatus" column="MESSAGE_STATUS"/>
+		<result property="direction" column="DIRECTION"/>
+		<result property="fileCount" column="FILE_COUNT"/>
+		<result property="totalSize" column="TOTAL_SIZE"/>
+		<result property="currTimestamp" column="CURR_TIMESTAMP"/>
+		<result property="recvTimestamp" column="RECV_TIMESTAMP"/>
+		<result property="sendTimestamp" column="SEND_TIMESTAMP"/>
+		<result property="toSystemSystemId" column="TO_SYSTEM_SYSTEM_ID"/>
+		<result property="envStstus" column="ENV_STSTUS"/>
+		<result property="envKey" column="ENV_KEY"/>
+		<result property="targetSystemId" column="TARGET_SYSTEM_ID"/>
+		<result property="authTicket" column="AUTH_TICKET"/>
+		<result property="senderSystemId" column="SENDER_SYSTEM_ID"/>
+		
+	</resultMap>
+	
+	
+	<select id="read" resultMap="getMessageTagResult">
+		SELECT * FROM SBMS_MESSAGE_TAG
+		WHERE 1 = 1
+		
+		<if test="messageTagId != null">
+			AND MESSAGE_TAG_ID = #{messageTagId}
+		</if>
+		<if test="messageId != null">
+			AND MESSAGE_ID = #{messageId}
+		</if>
+		<if test="conversationId != null">
+			AND CONVERSATION_ID = #{conversationId}
+		</if>
+        <if test="direction != null">
+            AND DIRECTION = #{direction}
+        </if>
+		
+		ORDER BY CURR_TIMESTAMP DESC
+		
+	</select>
+	
+
+	<insert id="create">
+		INSERT INTO SBMS_MESSAGE_TAG
+		(
+		MESSAGE_TAG_ID
+		,MESSAGE_ID
+		,SERVICE_ID
+		,CONVERSATION_ID
+		,SEND_REGNO
+		,RECEIVE_REGNO
+		,STATUS
+		,SIGNAL
+		,FROM_SYSTEM
+		,TO_SYSTEM
+		,TO_SYSTEM_CLIENT_CODE
+		,TO_SYSTEM_COMPANY_CODE
+		,MESSAGE_TYPE
+		,MESSAGE_STATUS
+		,DIRECTION
+		,FILE_COUNT
+		,TOTAL_SIZE
+		,CURR_TIMESTAMP
+		,RECV_TIMESTAMP
+		,SEND_TIMESTAMP
+		,TO_SYSTEM_SYSTEM_ID
+		,ENV_STSTUS
+		,ENV_KEY
+		,TARGET_SYSTEM_ID
+		,AUTH_TICKET
+		,SENDER_SYSTEM_ID
+		)VALUES(
+
+		#{messageTagId}
+		,#{messageId}
+		,#{serviceId}
+		,#{conversationId}
+		,#{sendRegNo}
+		,#{receiveRegNo}
+		,#{status}
+		,#{signal}
+		,#{fromSystem}
+		,#{toSystem}
+		,#{toSystemClientCode}
+		,#{toSystemCompanycode}
+		,#{messageType}
+		,#{messageStatus}
+		,#{direction}
+		,#{fileCount}
+		,#{totalSize}
+		,#{currTimestamp}
+		,#{recvTimestamp}
+		,#{sendTimestamp}
+		,#{toSystemSystemId}
+		,#{envStstus}
+		,#{envKey}
+		,#{targetSystemId}
+		,#{authTicket}
+		,#{senderSystemId}
+		)
+	</insert>
+			
+			
+	<update id="update">
+		UPDATE SBMS_MESSAGE_TAG 
+		<set>
+			<if test="null != messageStatus">MESSAGE_STATUS = #{messageStatus},</if>
+			<if test="null != fileCount">FILE_COUNT = #{fileCount, jdbcType=DECIMAL},</if>
+			<if test="null != totalSize">TOTAL_SIZE = #{totalSize, jdbcType=DECIMAL},</if>
+			<if test="null != senderSystemId">SENDER_SYSTEM_ID = #{senderSystemId},</if>
+			
+			<if test="null != currTimestamp">CURR_TIMESTAMP = #{currTimestamp},</if>
+			<if test="null != recvTimestamp">RECV_TIMESTAMP = #{recvTimestamp},</if>
+			<if test="null != sendTimestamp">SEND_TIMESTAMP = #{sendTimestamp}</if>
+			
+		</set>
+		WHERE 1 = 1
+		AND MESSAGE_TAG_ID = #{messageTagId}
+		<if test="null != messageId">AND MESSAGE_ID = #{messageId}</if>
+		<if test="null != serviceId">AND SERVICE_ID = #{serviceId}</if>
+	</update>
+	
+	<delete id="delete">
+	</delete>
+
+
+</mapper>

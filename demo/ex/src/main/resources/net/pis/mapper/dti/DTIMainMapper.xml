@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.pis.dao.dti.DTIMainMapper">
+	<resultMap id="dtiMainResult" type="net.pis.dto.table.DTIMainDTO">
+		<result property="conversationId"		column="CONVERSATION_ID" />
+		<result property="supbuyType"			column="SUPBUY_TYPE"/>
+		<result property="direction"			column="DIRECTION"/>
+		<result property="interfaceBatchId"		column="INTERFACE_BATCH_ID"/>
+		<result property="dtiWdate"				column="DTI_WDATE"/>
+        <result property="dtiIdate"				column="DTI_IDATE"/>
+        <result property="dtiSdate"				column="DTI_SDATE"/>
+
+		<!-- <result property="blankCnt"				column="BLANK_CNT"/> -->
+		<result property="dtiType"				column="DTI_TYPE"/>
+		<result property="taxDemand"			column="TAX_DEMAND"/>
+		<!-- <result property="volId"				column="VOL_ID"/>
+		<result property="issueId"				column="ISSUE_ID"/> -->
+		<!-- 10 -->
+
+		<result property="seqId"				column="SEQ_ID"/>
+		<!-- <result property="refOrderId"			column="REF_ORDER_ID"/>
+		<result property="refOrderDate"			column="REF_ORDER_DATE"/>
+		<result property="refInvoiceNum"		column="REF_INVOICE_NUM"/>
+		<result property="refInvoiceDate"		column="REF_INVOICE_DATE"/> -->
+		<result property="supComId"				column="SUP_COM_ID"/>
+		<result property="supComRegno"			column="SUP_COM_REGNO"/>
+		<result property="supRepName"			column="SUP_REP_NAME"/>
+		<result property="supComName"			column="SUP_COM_NAME"/>
+		<result property="supComType"			column="SUP_COM_TYPE"/>
+		<!-- 20 -->
+
+		<result property="supComClassify"		column="SUP_COM_CLASSIFY"/>
+		<result property="supComAddr"			column="SUP_COM_ADDR"/>
+		<result property="supDeptName"			column="SUP_DEPT_NAME"/>
+		<result property="supEmpName"			column="SUP_EMP_NAME"/>
+		<result property="supTelNum"			column="SUP_TEL_NUM"/>
+		<result property="supEmail"				column="SUP_EMAIL"/>
+		<result property="byrComId"				column="BYR_COM_ID"/>
+		<result property="byrComRegno"			column="BYR_COM_REGNO"/>
+		<result property="byrRepName"			column="BYR_REP_NAME"/>
+		<result property="byrComName"			column="BYR_COM_NAME"/>
+		<!-- 30 -->
+
+		<result property="byrComType"			column="BYR_COM_TYPE"/>
+		<result property="byrComClassify"		column="BYR_COM_CLASSIFY"/>
+		<result property="byrComAddr"			column="BYR_COM_ADDR"/>
+		<result property="byrDeptName"			column="BYR_DEPT_NAME"/>
+		<result property="byrEmpName"			column="BYR_EMP_NAME"/>
+		<result property="byrTelNum"			column="BYR_TEL_NUM"/>
+		<result property="byrEmail"				column="BYR_EMAIL"/>
+		<result property="brokerComId"			column="BROKER_COM_ID"/>
+		<result property="brokerComRegno"		column="BROKER_COM_REGNO"/>
+		<result property="brokerRepName"		column="BROKER_REP_NAME"/>
+		<!-- 40 -->
+
+		<result property="brokerComName"		column="BROKER_COM_NAME"/>
+		<result property="brokerComType"		column="BROKER_COM_TYPE"/>
+		<result property="brokerComClassify"	column="BROKER_COM_CLASSIFY"/>
+		<result property="brokerComAddr"		column="BROKER_COM_ADDR"/>
+		<result property="brokerDeptName"		column="BROKER_DEPT_NAME"/>
+		<result property="brokerEmpName"		column="BROKER_EMP_NAME"/>
+		<result property="brokerTelNum"			column="BROKER_TEL_NUM"/>
+		<result property="brokerEmail"			column="BROKER_EMAIL"/>
+		<result property="cashCode"				column="CASH_CODE"/>
+		<result property="cashAmount"			column="CASH_AMOUNT"/>
+		<!-- 50 -->
+
+		<result property="checkCode"			column="CHECK_CODE"/>
+		<result property="checkAmount"			column="CHECK_AMOUNT"/>
+		<result property="noteCode"				column="NOTE_CODE"/>
+		<result property="noteAmount"			column="NOTE_AMOUNT"/>
+		<result property="receivableCode"		column="RECEIVABLE_CODE"/>
+		<result property="receivableAmount"		column="RECEIVABLE_AMOUNT"/>
+		<result property="supAmount"			column="SUP_AMOUNT"/>
+		<result property="taxAmount"			column="TAX_AMOUNT"/>
+		<result property="totForeignAmount"		column="TOT_FOREIGN_AMOUNT"/>
+		<result property="totalAmount"			column="TOTAL_AMOUNT"/>
+		<!-- 60 -->
+
+		<result property="totalQuantity"		column="TOTAL_QUANTITY"/>
+		<result property="dttYn"				column="DTT_YN"/>
+		<result property="remark"				column="REMARK"/>
+		<result property="createdBy"			column="CREATED_BY"/>
+		<result property="creationDate"			column="CREATION_DATE"/>
+		<result property="lastUpdatedBy"		column="LAST_UPDATED_BY"/>
+		<result property="lastUpdateDate"		column="LAST_UPDATE_DATE"/>
+		<result property="etcnum1"				column="ETCNUM1"/>
+		<result property="etcnum2"				column="ETCNUM2"/>
+		<result property="etcnum3"				column="ETCNUM3"/>
+		<!-- 70 -->
+
+		<result property="etcnum4"				column="ETCNUM4"/>
+		<result property="dtiMsg"				column="DTI_MSG"/>
+		<result property="amendCode"			column="AMEND_CODE"/>
+		<result property="remark2"				column="REMARK2"/>
+		<result property="remark3"				column="REMARK3"/>
+		<result property="exchangedDocId"		column="EXCHANGED_DOC_ID"/>
+		<result property="approveId"			column="APPROVE_ID"/>
+		<result property="supBizplaceCode"		column="SUP_BIZPLACE_CODE"/>
+		<result property="byrBizplaceCode"		column="BYR_BIZPLACE_CODE"/>
+		<result property="brkBizplaceCode"		column="BRK_BIZPLACE_CODE"/>
+		<!-- 80 -->
+
+		<result property="byrDeptName2"			column="BYR_DEPT_NAME2"/>
+		<result property="byrEmpName2"			column="BYR_EMP_NAME2"/>
+		<result property="byrTelNum2"			column="BYR_TEL_NUM2"/>
+		<result property="byrEmail2"			column="BYR_EMAIL2"/>
+		<result property="attachfileYn"			column="ATTACHFILE_YN"/>
+		<result property="aspSmtpMail"			column="ASP_SMTP_MAIL"/>
+		<result property="oriIssueId"			column="ORI_ISSUE_ID"/>
+		<!-- 87 -->
+
+	</resultMap>
+
+
+	<insert id="create">
+		INSERT INTO XXSB_DTI_MAIN (
+			CONVERSATION_ID, SUPBUY_TYPE, DIRECTION, INTERFACE_BATCH_ID, DTI_WDATE, DTI_IDATE, DTI_SDATE,
+			DTI_TYPE, TAX_DEMAND,
+
+			SEQ_ID,
+			SUP_COM_ID, SUP_COM_REGNO, SUP_REP_NAME, SUP_COM_NAME, SUP_COM_TYPE,
+
+			SUP_COM_CLASSIFY, SUP_COM_ADDR, SUP_DEPT_NAME, SUP_EMP_NAME, SUP_TEL_NUM,
+			SUP_EMAIL, BYR_COM_ID, BYR_COM_REGNO, BYR_REP_NAME, BYR_COM_NAME,
+
+			BYR_COM_TYPE, BYR_COM_CLASSIFY, BYR_COM_ADDR, BYR_DEPT_NAME, BYR_EMP_NAME,
+			BYR_TEL_NUM, BYR_EMAIL, BROKER_COM_ID, BROKER_COM_REGNO, BROKER_REP_NAME,
+
+			BROKER_COM_NAME, BROKER_COM_TYPE, BROKER_COM_CLASSIFY, BROKER_COM_ADDR, BROKER_DEPT_NAME,
+			BROKER_EMP_NAME, BROKER_TEL_NUM, BROKER_EMAIL, <if test="null != cashCode">CASH_CODE,</if> CASH_AMOUNT,
+
+            <if test="null != checkCode">CHECK_CODE,</if> CHECK_AMOUNT,
+            <if test="null != noteCode">NOTE_CODE,</if> NOTE_AMOUNT,
+            <if test="null != receivableCode">RECEIVABLE_CODE,</if> RECEIVABLE_AMOUNT,
+            <if test="null != supAmount">SUP_AMOUNT,</if>
+            <if test="null != taxAmount">TAX_AMOUNT,</if>
+            <if test="null != totForeignAmount">TOT_FOREIGN_AMOUNT,</if>
+            <if test="null != totalAmount">TOTAL_AMOUNT,</if>
+
+            <if test="null != totalQuantity">TOTAL_QUANTITY,</if> DTT_YN, REMARK, CREATED_BY, CREATION_DATE,
+			LAST_UPDATED_BY, LAST_UPDATE_DATE, ETCNUM1, ETCNUM2, ETCNUM3,
+
+			ETCNUM4, DTI_MSG, AMEND_CODE, REMARK2, REMARK3,
+			EXCHANGED_DOC_ID, APPROVE_ID, SUP_BIZPLACE_CODE, BYR_BIZPLACE_CODE, BRK_BIZPLACE_CODE,
+
+			BYR_DEPT_NAME2, BYR_EMP_NAME2, BYR_TEL_NUM2, BYR_EMAIL2, <if test="null != attachfileYn">ATTACHFILE_YN,</if>
+			ASP_SMTP_MAIL, ORI_ISSUE_ID
+		) VALUES (
+
+			#{conversationId}, #{supbuyType}, #{direction}, #{interfaceBatchId}, #{dtiWdate}, #{dtiIdate}, #{dtiSdate},
+			#{dtiType}, #{taxDemand},
+
+			#{seqId},
+			#{supComId}, #{supComRegno}, #{supRepName}, #{supComName}, #{supComType},
+
+			#{supComClassify}, #{supComAddr}, #{supDeptName}, #{supEmpName}, #{supTelNum},
+			#{supEmail}, #{byrComId}, #{byrComRegno}, #{byrRepName}, #{byrComName},
+
+			#{byrComType}, #{byrComClassify}, #{byrComAddr}, #{byrDeptName}, #{byrEmpName},
+			#{byrTelNum}, #{byrEmail}, #{brokerComId}, #{brokerComRegno}, #{brokerRepName},
+
+			#{brokerComName}, #{brokerComType}, #{brokerComClassify}, #{brokerComAddr}, #{brokerDeptName},
+			#{brokerEmpName}, #{brokerTelNum}, #{brokerEmail}, <if test="null != cashCode">#{cashCode},</if> #{cashAmount},
+
+            <if test="null != checkCode">#{checkCode},</if> #{checkAmount},
+            <if test="null != noteCode">#{noteCode},</if> #{noteAmount},
+            <if test="null != receivableCode">#{receivableCode},</if> #{receivableAmount},
+            <if test="null != supAmount">#{supAmount},</if>
+            <if test="null != taxAmount">#{taxAmount},</if>
+            <if test="null != totForeignAmount">#{totForeignAmount},</if>
+            <if test="null != totalAmount">#{totalAmount},</if>
+
+			<if test="null != totalQuantity">#{totalQuantity},</if> #{dttYn}, #{remark}, #{createdBy}, #{creationDate},
+			#{lastUpdatedBy}, #{lastUpdateDate}, #{etcnum1}, #{etcnum2}, #{etcnum3},
+
+			#{etcnum4}, #{dtiMsg}, #{amendCode}, #{remark2}, #{remark3},
+			#{exchangedDocId}, #{approveId}, #{supBizplaceCode}, #{byrBizplaceCode}, #{brkBizplaceCode},
+
+			#{byrDeptName2}, #{byrEmpName2}, #{byrTelNum2}, #{byrEmail2}, <if test="null != attachfileYn">#{attachfileYn},</if>
+			#{aspSmtpMail}, #{oriIssueId}
+		)
+	</insert>
+
+
+	<select id="read" resultMap="dtiMainResult">
+		SELECT * FROM XXSB_DTI_MAIN
+		WHERE 1 = 1
+
+		<if test="conversationId != null" >
+			AND CONVERSATION_ID = #{conversationId}
+		</if>
+		<if test="supbuyType != null">
+			AND SUPBUY_TYPE = #{supbuyType}
+		</if>
+		<if test="direction != null">
+			AND DIRECTION = #{direction}
+		</if>
+        <if test="approveId != null">
+			AND APPROVE_ID = #{approveId}
+		</if>
+	</select>
+
+
+	<update id="update">
+		UPDATE XXSB_DTI_MAIN SET
+			<if test="interfaceBatchId != null">INTERFACE_BATCH_ID = #{interfaceBatchId},</if>
+			<if test="dtiWdate != null">DTI_WDATE = #{dtiWdate},</if>
+			<if test="dtiType != null">DTI_TYPE = #{dtiType},</if>
+			<if test="taxDemand != null">TAX_DEMAND = #{taxDemand},</if>
+			<if test="dtiMsg != null">DTI_MSG = #{dtiMsg},</if>
+			<if test="approveId != null">APPROVE_ID = #{approveId},</if>
+
+            <if test="dtiIdate != null">DTI_IDATE = #{dtiIdate},</if>
+            <if test="dtiSdate != null">DTI_SDATE = #{dtiSdate},</if>
+
+			LAST_UPDATE_DATE = GETDATE()
+
+/*
+			SEQ_ID, REF_ORDER_ID, REF_ORDER_DATE, REF_INVOICE_NUM, REF_INVOICE_DATE,
+			SUP_COM_ID, SUP_COM_REGNO, SUP_REP_NAME, SUP_COM_NAME, SUP_COM_TYPE,
+
+			SUP_COM_CLASSIFY, SUP_COM_ADDR, SUP_DEPT_NAME, SUP_EMP_NAME, SUP_TEL_NUM,
+			SUP_EMAIL, BYR_COM_ID, BYR_COM_REGNO, BYR_REP_NAME, BYR_COM_NAME,
+
+			BYR_COM_TYPE, BYR_COM_CLASSIFY, BYR_COM_ADDR, BYR_DEPT_NAME, BYR_EMP_NAME,
+			BYR_TEL_NUM, BYR_EMAIL, BROKER_COM_ID, BROKER_COM_REGNO, BROKER_REP_NAME,
+
+			BROKER_COM_NAME, BROKER_COM_TYPE, BROKER_COM_CLASSIFY, BROKER_COM_ADDR, BROKER_DEPT_NAME,
+			BROKER_EMP_NAME, BROKER_TEL_NUM, BROKER_EMAIL, CASH_CODE, CASH_AMOUNT,
+
+			CHECK_CODE, CHECK_AMOUNT, NOTE_CODE, NOTE_AMOUNT, RECEIVABLE_CODE,
+			RECEIVABLE_AMOUNT, SUP_AMOUNT, TAX_AMOUNT, TOT_FOREIGN_AMOUNT, TOTAL_AMOUNT,
+
+			TOTAL_QUANTITY, DTT_YN, REMARK, CREATED_BY, CREATION_DATE,
+			LAST_UPDATED_BY, LAST_UPDATE_DATE, ETCNUM1, ETCNUM2, ETCNUM3,
+
+			ETCNUM4, DTI_MSG, AMEND_CODE, REMARK2, REMARK3,
+			EXCHANGED_DOC_ID, APPROVE_ID, SUP_BIZPLACE_CODE, BYR_BIZPLACE_CODE, BRK_BIZPLACE_CODE,
+
+			BYR_DEPT_NAME2, BYR_EMP_NAME2, BYR_TEL_NUM2, BYR_EMAIL2, ATTACHFILE_YN,
+			ASP_SMTP_MAIL, ORI_ISSUE_ID
+
+		)
+		*/
+
+		WHERE 1 = 1
+		AND CONVERSATION_ID = #{conversationId}
+		AND SUPBUY_TYPE = #{supbuyType}
+		AND DIRECTION = #{direction}
+	</update>
+
+
+	<delete id="delete">
+		DELETE XXSB_DTI_MAIN
+		WHERE 1 = 1
+		AND CONVERSATION_ID = #{conversationId}
+		AND SUPBUY_TYPE = #{supbuyType}
+		AND DIRECTION = #{direction}
+	</delete>
+</mapper>

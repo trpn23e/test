@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.pis.dao.dti.DTIItemMapper">
+
+
+	<resultMap id="dtiItemResult" type="net.pis.dto.table.DTIItemDTO">
+        <result property="conversationId"		column="CONVERSATION_ID" />
+        <result property="supbuyType"		    column="SUPBUY_TYPE" />
+        <result property="direction"			column="DIRECTION" />
+        <result property="dtiLineNum"		    column="DTI_LINE_NUM" />
+        <result property="itemCode"		    	column="ITEM_CODE" />
+        <result property="itemName"		        column="ITEM_NAME" />
+        <result property="itemSize"			    column="ITEM_SIZE" />
+        <result property="itemMd"			    column="ITEM_MD" />
+        <result property="unitPrice"			column="UNIT_PRICE" />
+        <result property="itemQty"			    column="ITEM_QTY" />
+        <result property="supAmount"		    column="SUP_AMOUNT" />
+        <result property="taxAmount"		    column="TAX_AMOUNT" />
+        <result property="foreignAmount"		column="FOREIGN_AMOUNT" />
+        <result property="currencyCode"		    column="CURRENCY_CODE" />
+        <result property="itemGubun"		    column="ITEM_GUBUN" />
+        <result property="itemRemark"		    column="REMARK" />
+        <result property="createdBy"			column="CREATED_BY" />
+        <result property="creationDate"		    column="CREATION_DATE" />
+        <result property="lastUpdatedBy"		column="LAST_UPDATED_BY" />
+        <result property="lastUpdateDate"		column="LAST_UPDATE_DATE" />
+	</resultMap>
+	
+	
+	<insert id="create">
+		INSERT INTO XXSB_DTI_ITEM
+        (
+            CONVERSATION_ID,
+            SUPBUY_TYPE,
+            DIRECTION,
+            DTI_LINE_NUM,
+            ITEM_CODE,
+            ITEM_NAME,
+            ITEM_SIZE,
+            ITEM_MD,
+            <if test="null != unitPrice">UNIT_PRICE,</if>
+            <if test="null != itemQty">ITEM_QTY,</if>
+            <if test="null != supAmount">SUP_AMOUNT,</if>
+            <if test="null != taxAmount">TAX_AMOUNT,</if>
+            <if test="null != foreignAmount">FOREIGN_AMOUNT,</if>
+            CURRENCY_CODE,
+            <if test="null != itemGubun">ITEM_GUBUN,</if>
+            REMARK,
+            CREATED_BY,
+            CREATION_DATE,
+            LAST_UPDATED_BY,
+            LAST_UPDATE_DATE
+        )VALUES(
+            #{conversationId},
+            #{supbuyType},
+            #{direction},
+            #{dtiLineNum},
+            #{itemCode},
+            #{itemName},
+            #{itemSize},
+            #{itemMd},
+            <if test="null != unitPrice">#{unitPrice},</if>
+            <if test="null != itemQty">#{itemQty},</if>
+            <if test="null != supAmount">#{supAmount},</if>
+            <if test="null != taxAmount">#{taxAmount},</if>
+            <if test="null != foreignAmount">#{foreignAmount},</if>
+            #{currencyCode},
+            <if test="null != itemGubun">#{itemGubun},</if>
+            #{itemRemark},
+            #{createdBy},
+            #{creationDate},
+            #{lastUpdatedBy},
+            #{lastUpdateDate}
+        )
+
+	</insert>
+
+
+
+    <update id="update">
+       <!-- noting -->
+    </update>
+
+
+    <delete id="delete">
+        <!-- noting -->
+    </delete>
+
+
+
+    <select id="read" resultMap="dtiItemResult">
+        SELECT
+             DTI_LINE_NUM -- 일련번호*
+            ,ITEM_MD	  -- 공급년월일
+            ,ITEM_NAME	  -- 품목명
+            ,ITEM_SIZE	  -- 규격
+            ,REMARK		  -- 비고
+            ,ITEM_QTY	  -- 물품 수량
+            ,UNIT_PRICE	  -- 물품 단가
+            ,SUP_AMOUNT	  -- 공급가액
+            ,TAX_AMOUNT	  -- 세액
+         FROM XXSB_DTI_ITEM
+        WHERE 1=1
+        <if test="conversationId != null" >
+            AND CONVERSATION_ID = #{conversationId}
+        </if>
+        <if test="supbuyType != null">
+            AND SUPBUY_TYPE = #{supbuyType}
+        </if>
+        <if test="direction != null">
+            AND DIRECTION = #{direction}
+        </if>
+        <if test="itemGubun != null">
+            AND ITEM_GUBUN = #{itemGubun}
+        </if>
+    </select>
+
+
+
+</mapper>

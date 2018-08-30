@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.pis.dao.dti.RoutingInfoMapper">
+
+	<resultMap id="routingInfoDTOResult" type="net.pis.dto.RoutingInfoDTO">
+		<result property="systemId"		    column="SYSTEM_ID" />
+		<result property="systemName"		column="SYSTEM_NAME" />
+		<result property="targetKey"		column="TARGET_KEY" />
+		<result property="adapter"			column="ADAPTER" />
+		<result property="client"			column="CLIENT" />
+		<result property="company"			column="COMPANY" />
+		<result property="regUserId"		column="REG_USER_ID" />
+		<result property="regTimestamp"		column="REG_TIMESTAMP" />
+		<result property="modUserId"		column="MOD_USER_ID" />
+		<result property="modTimestamp"		column="MOD_TIMESTAMP" />
+
+	</resultMap>
+
+    
+	<insert id="create">
+		INSERT INTO SBMS_ROUTING_INFO
+		(
+		SYSTEM_ID,
+		SYSTEM_NAME,
+		TARGET_KEY,
+		ADPATER,
+		CLIENT,
+		COMPANY
+		REG_USER_ID,
+		REG_TIMESTAMP
+		)VALUES(
+		#{systemId}
+		,#{systemName}
+		,#{targetKey}
+		,#{Adapter}
+		,#{client}
+		,#{company}
+		,#{regUserId}
+		,#{regTimestamp}
+		)
+
+	</insert>
+
+	<select id="read" resultMap="routingInfoDTOResult">
+		SELECT *
+		FROM
+		SBMS_ROUTING_INFO
+		WHERE 1 = 1
+		<if test="null != systemId">AND SYSTEM_ID = #{systemId}</if>
+		<if test="null != targetKey">AND TARGET_KEY = #{targetKey}</if>
+		<if test="null != client">AND CLIENT = #{client}</if>
+		<if test="null != company">AND COMPANY = #{company}</if>
+		
+	</select>
+
+	<update id="update">
+		UPDATE SBMS_ROUTING_INFO
+		<set>
+			<if test="null != systemName"> SYSTEM_NAME = #{systemName}, </if>
+			<if test="null != targetKey"> TARGET_KEY = #{targetKey}, </if>
+			<if test="null != adapter"> ADPATER = #{adapter}, </if>
+			<if test="null != client"> CLIENT = #{client}, </if>
+			<if test="null != company"> COMPANY = #{company}, </if>
+			<if test="null != modUserId">MOD_USER_ID = #{modUserId},</if>
+			<if test="null != modTimestamp">MOD_TIMESTAMP = #{modTimestamp}</if>
+		</set>
+		WHERE
+		SYSTEM_ID = #{systemId}
+
+	</update>
+
+	<delete id="delete">
+	</delete>
+
+</mapper>

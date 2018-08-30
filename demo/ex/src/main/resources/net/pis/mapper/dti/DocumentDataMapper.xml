@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.pis.dao.dti.DocumentDataMapper">
+
+    <!--
+    <resultMap id="getMessageMainDocumentResult" type="net.pis.dto.message.MessageMainDocument">
+        <result property="documentDataId"	column="DOCUMENT_DATA_ID" />
+        <result property="messageTagId"		column="MESSAGE_TAG_ID" />
+        <result property="seq"		        column="SEQ" />
+        <result property="documentType"		column="DOCUMENT_TYPE"  />
+        <result property="documentData"		column="DOCUMENT_DATA" />
+        <result property="regTimestamp"		column="REG_TIMESTAMP" />
+    </resultMap>
+    -->
+
+    <resultMap id="documentDataDTOResult" type="net.pis.dto.DocumentDataDTO">
+        <result property="documentDataId"	column="DOCUMENT_DATA_ID" />
+        <result property="messageTagId"		column="MESSAGE_TAG_ID" />
+        <result property="seq"		        column="SEQ" />
+        <result property="documentType"		column="DOCUMENT_TYPE"  />
+        <result property="documentData"		column="DOCUMENT_DATA" />
+        <result property="regTimestamp"		column="REG_TIMESTAMP" />
+    </resultMap>
+
+
+    <!--
+    <select id="getMessageMainDocument" resultMap="getMessageMainDocumentResult">
+         SELECT
+            DOCUMENT_DATA_ID
+            ,MESSAGE_TAG_ID
+            ,SEQ
+            ,DOCUMENT_TYPE
+            ,DOCUMENT_DATA
+            ,REG_TIMESTAMP
+        FROM
+            SBMS_DOCUMENT_DATA
+        WHERE
+            MESSAGE_TAG_ID = #{messageMetainfo.messageTagId}
+    </select>
+    -->
+
+    <insert id="insertMainDocument">
+       INSERT INTO SBMS_DOCUMENT_DATA
+       (
+            DOCUMENT_DATA_ID
+            ,MESSAGE_TAG_ID
+            ,SEQ
+            ,DOCUMENT_TYPE
+            ,DOCUMENT_DATA
+            ,REG_TIMESTAMP
+       )VALUES(
+             #{documentDataId}
+            ,#{messageTagId}
+            ,#{seq}
+            ,#{documentType}
+            ,#{messageMainDocument.documentData}
+            ,GETDATE()
+       )
+    </insert>
+
+    <insert id="create">
+        INSERT INTO SBMS_DOCUMENT_DATA
+        (
+          DOCUMENT_DATA_ID,
+            MESSAGE_TAG_ID,
+            SEQ,
+            DOCUMENT_TYPE,
+            DOCUMENT_DATA,
+            REG_TIMESTAMP
+        )VALUES(
+             #{documentDataId}
+            ,#{messageTagId}
+            ,#{seq}
+            ,#{documentType}
+            ,#{documentData}
+            ,GETDATE()
+        )
+
+    </insert>
+
+    <select id="read" resultMap="documentDataDTOResult">
+        SELECT
+             DOCUMENT_DATA_ID
+            ,MESSAGE_TAG_ID
+            ,SEQ
+            ,DOCUMENT_TYPE
+            ,DOCUMENT_DATA
+            ,REG_TIMESTAMP
+        FROM
+            SBMS_DOCUMENT_DATA
+        WHERE
+            MESSAGE_TAG_ID = #{messageTagId}
+		ORDER BY SEQ
+    </select>
+
+    <update id="update">
+        UPDATE SBMS_DOCUMENT_DATA
+        SET
+			<if test="null != documentData">DOCUMENT_DATA = #{documentData}</if>
+			REG_TIMESTAMP = GETDATE()
+        WHERE
+        DOCUMENT_DATA_ID = #{documentDataId}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM SBMS_DOCUMENT_DATA
+        WHERE
+            DOCUMENT_DATA_ID = #{documentDataId}
+    </delete>
+
+
+
+
+
+</mapper>
