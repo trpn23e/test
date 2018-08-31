@@ -273,7 +273,8 @@
     </div>
     <div style="float:left;width:100%;">
         <div style="float:left;width:90%;margin:0 4% 0 4%;outline:2px solid #ccc;padding:15px;">
-            예제 환경 : Spring Boot 2.0.1.RELEASE(with Spring 5), JDK 1.8, JPA, QueryDSL, Mybatis 3, Embedded Tomcat, JSP, Gradle
+            스테이지
+            테스트 예제 환경 : Spring Boot 2.0.1.RELEASE(with Spring 5), JDK 1.8, JPA, QueryDSL, Mybatis 3, Embedded Tomcat, JSP, Gradle
             <br>
             <br>
             C태그 테스트 : [[[[[${testmsg}]]]]]   <--- 괄호 사이 메시지가 안나오면 인식 못한것임
